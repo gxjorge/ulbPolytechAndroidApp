@@ -3,6 +3,7 @@ package com.example.polytech2;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.TabHost;
@@ -28,8 +29,10 @@ public class DisplayMapsMenu extends Activity {
 		
 		WebView wvSolbosch = new WebView(this);
 		wvSolbosch=(WebView)findViewById(R.id.webViewPlanSolbosch);
-		wvSolbosch.setWebViewClient(new WebViewClient());
-		wvSolbosch.loadUrl("file:///android_asset/solbosch.html");
+		//wvSolbosch.setWebViewClient(new WebViewClient());
+		wvSolbosch.getSettings().setJavaScriptEnabled(true);
+		wvSolbosch.setWebChromeClient(new WebChromeClient());
+		wvSolbosch.loadUrl("file:///android_asset/www/solbosch.html");
 		
 		
 	}
