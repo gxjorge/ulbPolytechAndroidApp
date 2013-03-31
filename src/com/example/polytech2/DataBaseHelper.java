@@ -135,9 +135,21 @@ public class DataBaseHelper extends SQLiteOpenHelper{
     }
    
     
-	public String[] getInformation(){//---------------------------PROBLEMME  AVEC CETTE FONCTION AVEC LA REQUETTE SQL
+	public String[] getCours(){
     	String[] List = null;
 		Cursor c= myDataBase.rawQuery("SELECT NomDuCours FROM Cours", null);
+		List=new String[c.getCount()];
+		c.moveToNext();
+		for(int i=0;i<c.getCount();i++){
+			
+			List[i]=c.getString(0);
+			c.moveToNext();
+		}
+		return List;
+    }
+	public String[] getMnemomique(){
+    	String[] List = null;
+		Cursor c= myDataBase.rawQuery("SELECT Mnemomique FROM Cours", null);
 		List=new String[c.getCount()];
 		c.moveToNext();
 		for(int i=0;i<c.getCount();i++){
