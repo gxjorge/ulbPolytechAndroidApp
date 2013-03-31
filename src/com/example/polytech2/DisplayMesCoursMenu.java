@@ -15,19 +15,21 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+@SuppressWarnings("unused")
 public class DisplayMesCoursMenu extends Activity implements OnItemClickListener {
 
 	//------------------WEBSITE FOR CUSTOM LISTVIEWS:
 	//http://theopentutorials.com/tutorials/android/listview/android-custom-listview-with-image-and-text-using-arrayadapter/
 	 private ListView mainListView ;  
-	 private ArrayAdapter<String> listAdapter ;  
+	 CustomListViewAdapter adapter;
 	 String[] listCours;
-	 
 	 String[] listMnemomiques;
-	 //ListView listView;
+	 
 	 List<RowItem> rowItems;
 	//SQLiteDatabase db;
 	
@@ -38,27 +40,38 @@ public class DisplayMesCoursMenu extends Activity implements OnItemClickListener
 
 		databaseCheck();
 		
-		//---------------------------------http://windrealm.org/tutorials/android/android-listview.php
-		/*mainListView = (ListView) findViewById( R.id.mainListView); 
-		ArrayList<String> coursList = new ArrayList<String>();  
-		coursList.addAll( Arrays.asList(listCours) ); 
-		listAdapter = new ArrayAdapter<String>(this, R.layout.simplerow, coursList);  
-		mainListView.setAdapter( listAdapter );//*/
-		String[] titles=listCours;
-		String[] descriptions= listMnemomiques;
+		displayListView();
+		checkButtonClick();
+
+	}
+
+	private void displayListView() {
 		
 		rowItems = new ArrayList<RowItem>();
-        for (int i = 0; i < titles.length; i++) {
-            RowItem item = new RowItem( titles[i], descriptions[i]);
+        for (int i = 0; i < listCours.length; i++) {
+            RowItem item = new RowItem( listCours[i], listMnemomiques[i],false);// Pour le troisiemme il faudrer regarder si on peut prendre la list de checked
             rowItems.add(item);
         }
  
         mainListView = (ListView) findViewById(R.id.mainListView);
-        CustomListViewAdapter adapter = new CustomListViewAdapter(this,
+        adapter = new CustomListViewAdapter(this,
                 R.layout.list_item, rowItems);
         mainListView.setAdapter(adapter);
         mainListView.setOnItemClickListener(this);
-
+        
+        
+        
+        //---------------
+        mainListView.setOnItemClickListener(new OnItemClickListener() {
+        	   public void onItemClick(AdapterView<?> parent, View view,
+        	     int position, long id) {
+        	    // When clicked, show a toast with the TextView text
+        	    RowItem cours = (RowItem) parent.getItemAtPosition(position);
+        	    Toast.makeText(getApplicationContext(),
+        	      "Clicked on Row: " + cours.getTitle(), 
+        	      Toast.LENGTH_LONG).show();
+        	   }
+        	  });
 	}
 
 	private void databaseCheck() {
@@ -95,4 +108,30 @@ public class DisplayMesCoursMenu extends Activity implements OnItemClickListener
 		
 	}
 	
+	private void checkButtonClick() {
+		Button myButton = (Button) findViewById(R.id.findSelected);
+		myButton.setOnClickListener(new Button.OnClickListener() {
+		 
+				   public void onClick(View v) {
+		 
+				StringBuffer responseText = new StringBuffer();
+				responseText.append("The following were selected...\n");
+		 
+				
+				for(int i=0;i<rowItems.size();i++){
+					RowItem cours = rowItems.get(i);
+					if(cours.isSelected()){
+							responseText.append("\n" + cours.getTitle());
+					}
+				}
+		 
+				Toast.makeText(getApplicationContext(),
+		        responseText, Toast.LENGTH_LONG).show();
+
+		   }
+		  });
+	}
+	
 }
+//---------------------EXAMPLE CHECKBOX :
+//----------------------------------http://www.mysamplecode.com/2012/07/android-listview-checkbox-example.html

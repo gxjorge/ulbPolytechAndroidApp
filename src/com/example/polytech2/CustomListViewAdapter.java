@@ -7,8 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
  
 public class CustomListViewAdapter extends ArrayAdapter<RowItem> {
  
@@ -22,9 +24,10 @@ public class CustomListViewAdapter extends ArrayAdapter<RowItem> {
  
     /*private view holder class*/
     private class ViewHolder {
-        //ImageView imageView;
+       
         TextView txtTitle;
         TextView txtDesc;
+        CheckBox name;//-------------------
     }
  
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -38,14 +41,29 @@ public class CustomListViewAdapter extends ArrayAdapter<RowItem> {
             holder = new ViewHolder();
             holder.txtDesc = (TextView) convertView.findViewById(R.id.desc);
             holder.txtTitle = (TextView) convertView.findViewById(R.id.title);
-           // holder.imageView = (ImageView) convertView.findViewById(R.id.icon);
+            holder.name = (CheckBox) convertView.findViewById(R.id.checkBox1);//-----------------------
+            
             convertView.setTag(holder);
+            //--------------------------------------------------------------------------------
+            holder.name.setOnClickListener( new View.OnClickListener() {  
+                public void onClick(View v) {  
+                 CheckBox cb = (CheckBox) v ;  
+                 RowItem cours = (RowItem) cb.getTag();  
+                 Toast.makeText(context, //ici j'ai modifié cette ligne parceque il y avait une erreur par rapport au code du site web
+                  "Clicked on Checkbox: " + cb.getText() +
+                  " is " + cb.isChecked(), 
+                  Toast.LENGTH_LONG).show();
+                 cours.setSelected(cb.isChecked());
+                }  
+               });  
+            //---------------------------------------------------------------------------------
         } else
             holder = (ViewHolder) convertView.getTag();
  
         holder.txtDesc.setText(rowItem.getDesc());
         holder.txtTitle.setText(rowItem.getTitle());
-        //holder.imageView.setImageResource(rowItem.getImageId());
+        holder.name.setChecked(rowItem.isSelected());
+        holder.name.setTag(rowItem);
  
         return convertView;
     }

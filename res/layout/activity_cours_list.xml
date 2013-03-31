@@ -3,7 +3,16 @@
   android:orientation="vertical"  
   android:layout_width="fill_parent"  
   android:layout_height="fill_parent">  
-    
+    <TextView android:layout_width="fill_parent"
+ 		android:layout_height="wrap_content" android:padding="10dp"
+  		android:text="Choisit tes cours:" android:textSize="20sp" />
+ 
+ 
+    <Button
+        android:id="@+id/findSelected"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Selectionner" />
     <ListView android:layout_width="fill_parent"   
       android:layout_height="fill_parent"   
       android:id="@+id/mainListView">  

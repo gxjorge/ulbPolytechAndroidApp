@@ -4,8 +4,9 @@ public class RowItem {
     
     private String title;
     private String desc;
+    private boolean selected = false;
  
-    public RowItem( String title, String desc) {
+    public RowItem( String title, String desc, boolean selected) {
         
         this.title = title;
         this.desc = desc;
@@ -27,4 +28,10 @@ public class RowItem {
     public String toString() {
         return title + "\n" + desc;
     }
+    public boolean isSelected() {
+    	return selected;
+	}
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
 }
