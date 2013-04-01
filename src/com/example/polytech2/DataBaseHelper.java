@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -159,6 +160,45 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 		}
 		return List;
     }
+	public boolean[] getCheckBoxStatus(){
+    	//int[] Listnumber = null;
+    	boolean[] listbolean=null;
+		Cursor c= myDataBase.rawQuery("SELECT checked FROM Cours", null);
+		listbolean=new boolean[c.getCount()];
+		c.moveToNext();
+		for(int i=0;i<c.getCount();i++){
+			if(c.getInt(0)==1){
+				listbolean[i]=true;
+			}else{
+				listbolean[i]=false;
+			}
+			
+			c.moveToNext();
+		}
+		return listbolean;
+    }
+	
+	public void setElementsChecked(boolean[] listCheckboxes) throws SQLException{
+		 
+	    	//Open the database
+	        String myPath = DB_PATH + DB_NAME;
+	        //String[] number=new String[2];
+	        //String updateQuery;
+	        ContentValues values = new ContentValues();
+	        myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
+	    	for(int i=0;i<listCheckboxes.length;i++){
+	    		//number[0]=String.valueOf(listCheckboxes[i]? 1 : 0);
+	    		//number[1]=String.valueOf(i+1);
+	    		//updateQuery="UPDATE Cours SET checked="+number[0]+" WHERE _id="+number[1];
+	    		//Cursor c= myDataBase.rawQuery(updateQuery, null);//PROBLEME AVEC CETTE REQUETTE
+	    		
+	    		
+	    	    values.put("checked", listCheckboxes[i]? 1 : 0);
+	    	    myDataBase.update("Cours", values, "_id=?", new String[] {String.valueOf(i+1)});
+	    	}
+	    	
+	 
+	}
  
     @Override
 	public synchronized void close() {

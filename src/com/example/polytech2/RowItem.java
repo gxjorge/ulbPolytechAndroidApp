@@ -10,6 +10,7 @@ public class RowItem {
         
         this.title = title;
         this.desc = desc;
+        this.selected=selected;
     }
    
     public String getDesc() {

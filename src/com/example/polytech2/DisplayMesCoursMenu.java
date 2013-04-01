@@ -29,8 +29,9 @@ public class DisplayMesCoursMenu extends Activity implements OnItemClickListener
 	 CustomListViewAdapter adapter;
 	 String[] listCours;
 	 String[] listMnemomiques;
-	 
+	 boolean[] listCheckboxes;
 	 List<RowItem> rowItems;
+	 DataBaseHelper myDbHelper;
 	//SQLiteDatabase db;
 	
 	@Override
@@ -49,7 +50,7 @@ public class DisplayMesCoursMenu extends Activity implements OnItemClickListener
 		
 		rowItems = new ArrayList<RowItem>();
         for (int i = 0; i < listCours.length; i++) {
-            RowItem item = new RowItem( listCours[i], listMnemomiques[i],false);// Pour le troisiemme il faudrer regarder si on peut prendre la list de checked
+            RowItem item = new RowItem( listCours[i], listMnemomiques[i],listCheckboxes[i]);// Pour le troisiemme il faudrer regarder si on peut prendre la list de checked
             rowItems.add(item);
         }
  
@@ -62,7 +63,7 @@ public class DisplayMesCoursMenu extends Activity implements OnItemClickListener
         
         
         //---------------
-        mainListView.setOnItemClickListener(new OnItemClickListener() {
+        /*mainListView.setOnItemClickListener(new OnItemClickListener() {
         	   public void onItemClick(AdapterView<?> parent, View view,
         	     int position, long id) {
         	    // When clicked, show a toast with the TextView text
@@ -71,11 +72,11 @@ public class DisplayMesCoursMenu extends Activity implements OnItemClickListener
         	      "Clicked on Row: " + cours.getTitle(), 
         	      Toast.LENGTH_LONG).show();
         	   }
-        	  });
+        	  });//*/
 	}
 
 	private void databaseCheck() {
-		DataBaseHelper myDbHelper;
+		
         myDbHelper = new DataBaseHelper(this);
  
         try {
@@ -88,6 +89,8 @@ public class DisplayMesCoursMenu extends Activity implements OnItemClickListener
         	myDbHelper.openDataBase();
         	listCours=myDbHelper.getCours();
         	listMnemomiques=myDbHelper.getMnemomique();
+        	listCheckboxes=myDbHelper.getCheckBoxStatus();
+        	
         	
         }catch(SQLException sqle){
         	throw sqle;
@@ -120,10 +123,13 @@ public class DisplayMesCoursMenu extends Activity implements OnItemClickListener
 				
 				for(int i=0;i<rowItems.size();i++){
 					RowItem cours = rowItems.get(i);
+					listCheckboxes[i]=cours.isSelected();
 					if(cours.isSelected()){
 							responseText.append("\n" + cours.getTitle());
+							
 					}
 				}
+				myDbHelper.setElementsChecked(listCheckboxes);
 		 
 				Toast.makeText(getApplicationContext(),
 		        responseText, Toast.LENGTH_LONG).show();

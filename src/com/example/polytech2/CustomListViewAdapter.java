@@ -49,10 +49,10 @@ public class CustomListViewAdapter extends ArrayAdapter<RowItem> {
                 public void onClick(View v) {  
                  CheckBox cb = (CheckBox) v ;  
                  RowItem cours = (RowItem) cb.getTag();  
-                 Toast.makeText(context, //ici j'ai modifié cette ligne parceque il y avait une erreur par rapport au code du site web
+                 /*Toast.makeText(context, //ici j'ai modifié cette ligne parceque il y avait une erreur par rapport au code du site web
                   "Clicked on Checkbox: " + cb.getText() +
                   " is " + cb.isChecked(), 
-                  Toast.LENGTH_LONG).show();
+                  Toast.LENGTH_LONG).show();//*/
                  cours.setSelected(cb.isChecked());
                 }  
                });  
