@@ -1,0 +1,96 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DisplayNewsMenu"
+    android:background="#01478D" >
+    
+    <ImageView
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    android:src="@drawable/ulb_flammes_layer" />
+
+    <TableLayout
+    	android:id="@+id/tableLayout1"
+    	android:layout_width="fill_parent"
+    	android:layout_height="fill_parent"
+    	android:gravity = "top" >
+    	
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+             >
+    
+    			<TextView
+					android:id="@+id/tvCours"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+			    	android:layout_gravity="top|center"
+			    	android:layout_margin="15dp"
+			  		android:textAppearance="?android:attr/textAppearanceLarge"
+			        android:freezesText="true"
+			        android:padding="5dp"
+			        android:text="Cours"
+			        android:textColor="#FFFFFF"/>
+    		
+    	</TableRow>
+    		
+    	
+    	<TableRow
+            android:id="@+id/tableRow2"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            >
+    
+    			<TextView
+					android:id="@+id/tvWeb"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+			    	android:layout_gravity="center"
+			    	android:layout_margin="15dp"
+			    	
+			        android:freezesText="true"
+			        android:padding="5dp"
+			        android:text="Web"
+			        android:onClick="true"
+			        android:textColor="#FFFFFF"/>
+    		
+    	</TableRow>
+    	<TableRow
+            android:id="@+id/tableRow3"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:gravity="center"
+            android:padding="5dp" >
+    
+    			 <ScrollView
+			    android:layout_width="fill_parent"
+			    android:layout_height="fill_parent"
+			    android:layout_below="@+id/search_btn" >
+			
+			         
+			    	<TextView
+					android:id="@+id/tweets"
+					android:layout_width="fill_parent"
+					android:layout_height="wrap_content"
+			    	android:layout_gravity="top|center"
+			    	android:layout_margin="15dp"
+			    	android:background="#DDFFFFFF"
+			        android:freezesText="true"
+			        android:padding="10dp"
+			        android:text="Loading..."/>
+ 
+    			</ScrollView>
+    		
+    	</TableRow>
+    	
+    	
+    </TableLayout>
+  
+         
+   	
+
+</RelativeLayout>

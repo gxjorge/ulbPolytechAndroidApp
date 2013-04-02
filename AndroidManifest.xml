@@ -48,6 +48,14 @@
             android:name="com.example.polytech2.DisplayMesCoursMenu"
             android:label="@string/title_activity_display_mes_cours_menu" >
         </activity>
+        <activity
+            android:name="com.example.polytech2.DisplayCoursMenu"
+            android:label="@string/title_activity_display_mes_cours_menu" >
+        </activity>
+        <activity
+            android:name="com.example.polytech2.DisplayCoursTwitterMenu"
+            android:label="@string/title_activity_display_mes_cours_menu" >
+        </activity>
     </application>
 
 </manifest>

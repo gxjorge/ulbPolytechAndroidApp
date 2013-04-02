@@ -7,11 +7,13 @@ import java.util.List;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.view.Menu;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
@@ -25,54 +27,81 @@ public class DisplayMesCoursMenu extends Activity implements OnItemClickListener
 
 	//------------------WEBSITE FOR CUSTOM LISTVIEWS:
 	//http://theopentutorials.com/tutorials/android/listview/android-custom-listview-with-image-and-text-using-arrayadapter/
-	 private ListView mainListView ;  
-	 CustomListViewAdapter adapter;
+	 private ListView mainListView1 ;  
+	 CustomSelectedListViewAdapter adapter;
 	 String[] listCours;
 	 String[] listMnemomiques;
 	 boolean[] listCheckboxes;
-	 List<RowItem> rowItems;
+	 List<RowItemSelected> rowItems;
 	 DataBaseHelper myDbHelper;
 	//SQLiteDatabase db;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_cours_list);
-
-		databaseCheck();
+		setContentView(R.layout.activity_display_mes_cours_menu);
 		
+	}
+	public void onResume()
+	{
+		databaseCheck();
 		displayListView();
 		checkButtonClick();
+	    super.onResume();
+	}
 
+	
+	
+
+	private void checkButtonClick() {
+		Button settings=(Button) findViewById(R.id.bCours);
+        settings.setOnClickListener(new OnClickListener(){
+
+			@Override
+			public void onClick(View v) {
+				Intent a;
+				a=new Intent(DisplayMesCoursMenu.this, DisplayCoursMenu.class);
+				startActivity(a);
+				
+			}
+        	
+        });
 	}
 
 	private void displayListView() {
 		
-		rowItems = new ArrayList<RowItem>();
+		rowItems = new ArrayList<RowItemSelected>();
         for (int i = 0; i < listCours.length; i++) {
-            RowItem item = new RowItem( listCours[i], listMnemomiques[i],listCheckboxes[i]);// Pour le troisiemme il faudrer regarder si on peut prendre la list de checked
-            rowItems.add(item);
+        	if(listCheckboxes[i]){
+        		RowItemSelected item = new RowItemSelected( listCours[i], listMnemomiques[i]);// Pour le troisiemme il faudrer regarder si on peut prendre la list de checked
+                rowItems.add(item);
+        	}
+            
         }
  
-        mainListView = (ListView) findViewById(R.id.mainListView);
-        adapter = new CustomListViewAdapter(this,
-                R.layout.list_item, rowItems);
-        mainListView.setAdapter(adapter);
-        mainListView.setOnItemClickListener(this);
+        mainListView1 = (ListView) findViewById(R.id.mainListView1);
+        adapter = new CustomSelectedListViewAdapter(this, R.layout.selected_list_item, rowItems);
+        mainListView1.setAdapter(adapter);
+        mainListView1.setOnItemClickListener(this);
         
         
         
         //---------------
-        /*mainListView.setOnItemClickListener(new OnItemClickListener() {
+        mainListView1.setOnItemClickListener(new OnItemClickListener() {
         	   public void onItemClick(AdapterView<?> parent, View view,
         	     int position, long id) {
-        	    // When clicked, show a toast with the TextView text
-        	    RowItem cours = (RowItem) parent.getItemAtPosition(position);
-        	    Toast.makeText(getApplicationContext(),
-        	      "Clicked on Row: " + cours.getTitle(), 
-        	      Toast.LENGTH_LONG).show();
+	        	    // When clicked, show a toast with the TextView text
+	        	    RowItemSelected cours = (RowItemSelected) parent.getItemAtPosition(position);
+	        	    Toast.makeText(getApplicationContext(),
+	        	      "Clicked on Row: " + cours.getTitle(), 
+	        	      Toast.LENGTH_LONG).show();
+	        	    Intent i=new Intent(DisplayMesCoursMenu.this,DisplayCoursTwitterMenu.class);
+	        	    i.putExtra("title", cours.getTitle());
+	        	    i.putExtra("mnemomique", cours.getDesc());
+	        	    startActivity(i);
         	   }
         	  });//*/
+        
 	}
 
 	private void databaseCheck() {
@@ -111,32 +140,7 @@ public class DisplayMesCoursMenu extends Activity implements OnItemClickListener
 		
 	}
 	
-	private void checkButtonClick() {
-		Button myButton = (Button) findViewById(R.id.findSelected);
-		myButton.setOnClickListener(new Button.OnClickListener() {
-		 
-				   public void onClick(View v) {
-		 
-				StringBuffer responseText = new StringBuffer();
-				responseText.append("The following were selected...\n");
-		 
-				
-				for(int i=0;i<rowItems.size();i++){
-					RowItem cours = rowItems.get(i);
-					listCheckboxes[i]=cours.isSelected();
-					if(cours.isSelected()){
-							responseText.append("\n" + cours.getTitle());
-							
-					}
-				}
-				myDbHelper.setElementsChecked(listCheckboxes);
-		 
-				Toast.makeText(getApplicationContext(),
-		        responseText, Toast.LENGTH_LONG).show();
-
-		   }
-		  });
-	}
+	
 	
 }
 //---------------------EXAMPLE CHECKBOX :

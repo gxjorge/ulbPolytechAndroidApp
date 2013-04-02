@@ -4,7 +4,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;    
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
+
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -148,6 +148,19 @@ public class DataBaseHelper extends SQLiteOpenHelper{
 		}
 		return List;
     }
+	public String getWebsiteFromCours(String cours){
+		
+		String  website= null;
+		Cursor c= myDataBase.rawQuery("SELECT Website FROM Cours WHERE NomDuCours=?", new String[]{cours});
+		website=new String();
+		c.moveToNext();
+		
+		website=c.getString(0);
+					
+		return website;
+
+	}
+	
 	public String[] getMnemomique(){
     	String[] List = null;
 		Cursor c= myDataBase.rawQuery("SELECT Mnemomique FROM Cours", null);

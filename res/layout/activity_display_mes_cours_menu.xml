@@ -23,14 +23,15 @@
             android:gravity="center"
             android:padding="5dp" >
     
-    		<Spinner
-    			android:id="@+id/annee_spinner"
-    			android:layout_width="wrap_content"
-    			android:layout_height="wrap_content"
-    			android:background="@drawable/custom_button" />
+    			<Button
+    		    android:id="@+id/bCours"
+    		    android:layout_width="wrap_content"
+    		    android:layout_height="wrap_content"
+    		    android:text="Choisir mes cours" />
     		
     	</TableRow>
     		
+    	
     	<TableRow
             android:id="@+id/tableRow2"
             android:layout_width="fill_parent"
@@ -38,29 +39,14 @@
             android:gravity="center"
             android:padding="5dp" >
     
-    		<Spinner
-    			android:id="@+id/option_spinner"
-    			android:layout_width="wrap_content"
-    			android:layout_height="wrap_content"
-    			android:background="@drawable/custom_button" />
+    		<ListView 
+    		    android:layout_width="fill_parent"   
+      			android:layout_height="fill_parent"   
+      			android:id="@+id/mainListView1">  
+    		</ListView>  
     		
     	</TableRow>
     	
-    	<TableRow
-            android:id="@+id/tableRow3"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:gravity="center"
-            android:padding="5dp" >
-    
-    		<Button
-        		android:id="@+id/Save_button"
-        		android:layout_width="wrap_content"
-        		android:layout_height="wrap_content"
-        		android:text="Enregistrer"
-        		android:background="@drawable/custom_button" />
-    		
-    	</TableRow>
     	
     </TableLayout>
 
