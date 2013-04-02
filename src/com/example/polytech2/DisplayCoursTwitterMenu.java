@@ -5,8 +5,11 @@ import java.io.IOException;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.SQLException;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.TextView;
 
 public class DisplayCoursTwitterMenu extends Activity {
@@ -31,6 +34,15 @@ public class DisplayCoursTwitterMenu extends Activity {
 		tvCours.setText(nomCours);
 		databaseCheckForWebsite();
 		tvWebsite.setText(website);
+		tvWebsite.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent browse = new Intent( Intent.ACTION_VIEW , Uri.parse( website ) );
+				    startActivity( browse );
+					
+				}
+          	});
+		
 		//searchTwitter(tweetDisplay);//added line so searchTwitter method is called from the opening of the activity directly
 		TwitterSearch ts=new TwitterSearch(tweetDisplay,"#"+intent.getStringExtra("mnemomique"));
 	}
