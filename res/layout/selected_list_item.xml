@@ -7,7 +7,6 @@
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/icon"
         android:paddingBottom="10dp"
         android:textColor="#FFFFFF"
         android:textSize="16dp" />
@@ -17,7 +16,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/title"
-        android:layout_toRightOf="@+id/icon"
+        
         android:paddingLeft="10dp"
         android:textColor="#3399FF"
         android:textSize="14dp" />

@@ -5,6 +5,8 @@ import java.io.IOException;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.SQLException;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.Menu;
@@ -44,7 +46,13 @@ public class DisplayCoursTwitterMenu extends Activity {
           	});
 		
 		//searchTwitter(tweetDisplay);//added line so searchTwitter method is called from the opening of the activity directly
-		TwitterSearch ts=new TwitterSearch(tweetDisplay,"#"+intent.getStringExtra("mnemomique"));
+		if (isNetworkAvailable()){
+			TwitterSearch ts=new TwitterSearch(tweetDisplay,"#"+intent.getStringExtra("mnemomique"));
+		}else{
+			tweetDisplay.setText("Pas de connection internet");
+		}
+		
+		
 	}
 
 	@Override
@@ -71,5 +79,10 @@ public class DisplayCoursTwitterMenu extends Activity {
         	throw sqle;
         }
 		
+	}
+	private boolean isNetworkAvailable() {
+	    ConnectivityManager connectivityManager = (ConnectivityManager) getSystemService(this.CONNECTIVITY_SERVICE);
+	    NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+	    return activeNetworkInfo != null && activeNetworkInfo.isConnected();
 	}
 }
